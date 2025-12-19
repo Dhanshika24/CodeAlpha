@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creative Photo Gallery</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI",sans-serif;
+}
+
+body{
+    background:linear-gradient(to right,#42275a,#734b6d);
+    color:#fff;
+    min-height:100vh;
+    transition:0.4s;
+}
+
+/* Light mode */
+body.light{
+    background:linear-gradient(to right,#fdfbfb,#ebedee);
+    color:#000;
+}
+
+h1{
+    text-align:center;
+    margin:25px 0;
+    font-size:2.5rem;
+}
+
+/* Toggle */
+.toggle{
+    text-align:center;
+    margin-bottom:15px;
+}
+
+.toggle button{
+    padding:8px 18px;
+    border:none;
+    border-radius:20px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+/* Filters */
+.filters{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.filters button{
+    background:#ffd86f;
+    border:none;
+    padding:10px 20px;
+    margin:5px;
+    border-radius:25px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.filters button:hover{
+    background:#ff9f43;
+    color:#fff;
+}
+
+/* Gallery */
+.gallery{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
+    padding:20px;
+}
+
+.gallery-item{
+    position:relative;
+    overflow:hidden;
+    border-radius:15px;
+    cursor:pointer;
+}
+
+.gallery-item img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:0.4s;
+}
+
+.gallery-item:hover img{
+    transform:scale(1.1);
+    filter:brightness(70%);
+}
+
+.gallery-item::after{
+    content:"Open";
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    opacity:0;
+    font-size:22px;
+    font-weight:bold;
+    transition:0.4s;
+}
+
+.gallery-item:hover::after{
+    opacity:1;
+}
+
+/* Lightbox */
+.lightbox{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.9);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:1000;
+}
+
+.lightbox img{
+    max-width:85%;
+    max-height:85%;
+    border-radius:12px;
+}
+
+.close,.prev,.next{
+    position:absolute;
+    color:#fff;
+    font-size:40px;
+    cursor:pointer;
+}
+
+.close{top:20px;right:30px;}
+.prev{left:30px;}
+.next{right:30px;}
+
+@media(max-width:600px){
+    .prev,.next{font-size:30px;}
+}
+</style>
+</head>
+
+<body>
+
+<h1>🌈 Creative Photo Gallery</h1>
+
+<div class="toggle">
+    <button onclick="toggleMode()">Dark / Light Mode</button>
+</div>
+
+<div class="filters">
+    <button onclick="filterImages('all')">All</button>
+    <button onclick="filterImages('nature')">Nature</button>
+    <button onclick="filterImages('city')">City</button>
+    <button onclick="filterImages('animals')">Animals</button>
+</div>
+
+<div class="gallery">
+    <!-- Nature -->
+    <div class="gallery-item nature"><img src="https://picsum.photos/id/1040/600/400"></div>
+    <div class="gallery-item nature"><img src="https://picsum.photos/id/1021/600/400"></div>
+
+    <!-- City -->
+    <div class="gallery-item city"><img src="https://picsum.photos/id/1012/600/400"></div>
+    <div class="gallery-item city"><img src="https://picsum.photos/id/1003/600/400"></div>
+
+    <!-- Animals -->
+    <div class="gallery-item animals"><img src="https://picsum.photos/id/237/600/400"></div>
+    <div class="gallery-item animals"><img src="https://picsum.photos/id/1074/600/400"></div>
+</div>
+
+<div class="lightbox" id="lightbox">
+    <span class="close" onclick="closeLightbox()">&times;</span>
+    <span class="prev" onclick="changeImage(-1)">&#10094;</span>
+    <img id="lightbox-img">
+    <span class="next" onclick="changeImage(1)">&#10095;</span>
+</div>
+
+<script>
+const images=document.querySelectorAll(".gallery-item img");
+const lightbox=document.getElementById("lightbox");
+const lightboxImg=document.getElementById("lightbox-img");
+let currentIndex=0;
+
+images.forEach((img,index)=>{
+    img.onclick=()=>{
+        currentIndex=index;
+        lightbox.style.display="flex";
+        lightboxImg.src=img.src;
+    }
+});
+
+function closeLightbox(){
+    lightbox.style.display="none";
+}
+
+function changeImage(dir){
+    currentIndex+=dir;
+    if(currentIndex<0) currentIndex=images.length-1;
+    if(currentIndex>=images.length) currentIndex=0;
+    lightboxImg.src=images[currentIndex].src;
+}
+
+function filterImages(category){
+    document.querySelectorAll(".gallery-item").forEach(item=>{
+        item.style.display =
+            category==="all" || item.classList.contains(category)
+            ? "block"
+            : "none";
+    });
+}
+
+function toggleMode(){
+    document.body.classList.toggle("light");
+}
+</script>
+
+</body>
+</html>

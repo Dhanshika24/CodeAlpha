@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scientific Calculator</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    font-family:Segoe UI, sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    color:#fff;
+}
+
+.calculator{
+    background:#081a24;
+    padding:20px;
+    border-radius:25px;
+    width:360px;
+    box-shadow:0 0 30px rgba(0,255,255,0.3);
+}
+
+.display{
+    background:#000;
+    color:#00ffcc;
+    font-size:28px;
+    padding:15px;
+    text-align:right;
+    border-radius:12px;
+    margin-bottom:15px;
+    overflow-x:auto;
+}
+
+/* Buttons */
+.buttons{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:10px;
+}
+
+button{
+    padding:14px;
+    font-size:16px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+button:hover{
+    transform:scale(1.05);
+    opacity:0.9;
+}
+
+/* Button Types */
+.num{background:#1f2f3a;color:#fff;}
+.op{background:#00bcd4;color:#000;font-weight:bold;}
+.equal{background:#00e676;color:#000;font-weight:bold;grid-column:span 2;}
+.clear{background:#ff5252;color:#fff;}
+.delete{background:#607d8b;color:#fff;}
+.sci{background:#263238;color:#00ffcc;font-size:14px;}
+
+/* Help */
+.help-box{
+    background:rgba(255,255,255,0.08);
+    margin-top:18px;
+    padding:12px;
+    border-radius:12px;
+    font-size:13px;
+}
+
+.help-box h3{
+    color:#00ffcc;
+    margin-bottom:6px;
+}
+
+@media(max-width:420px){
+    .calculator{width:95%;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="calculator">
+
+<div class="display" id="display">0</div>
+
+<div class="buttons">
+
+<!-- Scientific -->
+<button class="sci" onclick="append('Math.sin(')">sin</button>
+<button class="sci" onclick="append('Math.cos(')">cos</button>
+<button class="sci" onclick="append('Math.tan(')">tan</button>
+<button class="sci" onclick="append('Math.log10(')">log</button>
+<button class="sci" onclick="append('Math.PI')">π</button>
+
+<button class="sci" onclick="append('Math.sqrt(')">√</button>
+<button class="sci" onclick="append('**2')">x²</button>
+<button class="sci" onclick="append('**')">xʸ</button>
+<button class="sci" onclick="append('(')">(</button>
+<button class="sci" onclick="append(')')">)</button>
+
+<!-- Control -->
+<button class="clear" onclick="clearDisplay()">C</button>
+<button class="delete" onclick="deleteLast()">⌫</button>
+<button class="op" onclick="append('%')">%</button>
+<button class="op" onclick="append('/')">÷</button>
+<button class="op" onclick="append('*')">×</button>
+
+<!-- Numbers -->
+<button class="num" onclick="append('7')">7</button>
+<button class="num" onclick="append('8')">8</button>
+<button class="num" onclick="append('9')">9</button>
+<button class="op" onclick="append('-')">−</button>
+<button class="op" onclick="append('+')">+</button>
+
+<button class="num" onclick="append('4')">4</button>
+<button class="num" onclick="append('5')">5</button>
+<button class="num" onclick="append('6')">6</button>
+<button class="num" onclick="append('1')">1</button>
+<button class="num" onclick="append('2')">2</button>
+
+<button class="num" onclick="append('3')">3</button>
+<button class="num" onclick="append('0')">0</button>
+<button class="num" onclick="append('.')">.</button>
+<button class="equal" onclick="calculate()">=</button>
+
+</div>
+
+<div class="help-box">
+<h3>ℹ Tips</h3>
+<ul>
+<li>Use keyboard or buttons</li>
+<li>sin, cos, tan work in radians</li>
+<li>Press Enter = calculate</li>
+<li>Esc = clear | Backspace = delete</li>
+</ul>
+</div>
+
+</div>
+
+<script>
+const display=document.getElementById("display");
+
+function append(val){
+    if(display.innerText==="0"||display.innerText==="Error"){
+        display.innerText=val;
+    }else{
+        display.innerText+=val;
+    }
+}
+
+function clearDisplay(){
+    display.innerText="0";
+}
+
+function deleteLast(){
+    display.innerText=display.innerText.slice(0,-1);
+    if(display.innerText==="") display.innerText="0";
+}
+
+function calculate(){
+    try{
+        let exp=display.innerText.replace(/%/g,"/100");
+        display.innerText=eval(exp);
+    }catch{
+        display.innerText="Error";
+    }
+}
+
+/* Keyboard Support */
+document.addEventListener("keydown",e=>{
+    if(!isNaN(e.key)||"+-*/.%()".includes(e.key)){
+        append(e.key);
+    }
+    if(e.key==="Enter") calculate();
+    if(e.key==="Backspace") deleteLast();
+    if(e.key==="Escape") clearDisplay();
+});
+</script>
+
+</body>
+</html>

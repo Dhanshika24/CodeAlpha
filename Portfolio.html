@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Portfolio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+html{scroll-behavior:smooth;}
+
+body{
+  background:linear-gradient(135deg,#e6dada,#cfd9df);
+  color:#333;
+  transition:0.3s;
+}
+
+body.dark{
+  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  color:#eee;
+}
+
+/* ===== HEADER ===== */
+header{
+  position:fixed;
+  top:0;
+  width:100%;
+  background:#1f1f2e;
+  padding:15px 40px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  z-index:1000;
+}
+
+header h1{color:#fff;}
+
+nav a{
+  color:#fff;
+  margin-left:20px;
+  text-decoration:none;
+  font-size:14px;
+}
+
+nav a:hover,
+nav a.active{color:#b388ff;}
+
+.toggle{cursor:pointer;margin-left:20px;color:#fff;}
+
+section{
+  padding:110px 10% 80px;
+  min-height:100vh;
+  opacity:0;
+  transform:translateY(40px);
+  transition:1s;
+}
+
+section.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* ===== HOME ===== */
+#home{
+  background:linear-gradient(to right,#7f7fd5,#86a8e7,#91eae4);
+  color:white;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+#home h2{font-size:40px;}
+
+.btn{
+  margin-top:20px;
+  padding:10px 25px;
+  background:white;
+  color:#6a5acd;
+  text-decoration:none;
+  border-radius:25px;
+  display:inline-block;
+  width:fit-content;
+}
+
+.btn:hover{
+  background:#6a5acd;
+  color:white;
+}
+
+/* ===== ABOUT ===== */
+h2{text-align:center;margin-bottom:30px;}
+
+#about p{
+  max-width:800px;
+  margin:auto;
+  text-align:center;
+  line-height:1.8;
+}
+
+/* ===== SKILLS ===== */
+.skills-container{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:20px;
+}
+
+.skill{
+  background:white;
+  padding:20px;
+  text-align:center;
+  border-radius:10px;
+  transition:0.3s;
+}
+
+.skill:hover{
+  transform:translateY(-8px);
+  background:#6a5acd;
+  color:white;
+}
+
+body.dark .skill,
+body.dark .project{background:#1e1e1e;}
+
+/* ===== PROJECTS ===== */
+.projects-container{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:25px;
+}
+
+.project{
+  background:white;
+  padding:20px;
+  border-radius:10px;
+  transition:0.3s;
+}
+
+.project:hover{
+  transform:scale(1.05);
+}
+
+.project a{
+  display:inline-block;
+  margin-top:10px;
+  color:#6a5acd;
+  text-decoration:none;
+}
+
+/* ===== CONTACT ===== */
+form{
+  max-width:500px;
+  margin:auto;
+  display:flex;
+  flex-direction:column;
+}
+
+input,textarea{
+  margin-bottom:15px;
+  padding:10px;
+  border-radius:5px;
+  border:1px solid #ccc;
+}
+
+button{
+  padding:10px;
+  border:none;
+  background:#6a5acd;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+
+/* ===== SCROLL TOP ===== */
+#topBtn{
+  position:fixed;
+  bottom:30px;
+  right:30px;
+  padding:12px 16px;
+  border-radius:50%;
+  background:#6a5acd;
+  color:white;
+  border:none;
+  display:none;
+  cursor:pointer;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  header{flex-direction:column;}
+  nav{margin-top:10px;}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>My Portfolio</h1>
+<nav>
+<a href="#home" class="nav-link active">Home</a>
+<a href="#about" class="nav-link">About</a>
+<a href="#skills" class="nav-link">Skills</a>
+<a href="#projects" class="nav-link">Projects</a>
+<a href="#contact" class="nav-link">Contact</a>
+<span class="toggle" onclick="toggleMode()">🌙</span>
+</nav>
+</header>
+
+<section id="home" class="show">
+<h2>Hello, I'm a Front-End Developer</h2>
+<p>I build responsive and interactive websites.</p>
+<a href="#projects" class="btn">View Projects</a>
+<a href="#" class="btn">Download Resume</a>
+</section>
+
+<section id="about">
+<h2>About Me</h2>
+<p>I am passionate about creating clean, modern and user-friendly web interfaces using HTML, CSS and JavaScript.</p>
+</section>
+
+<section id="skills">
+<h2>Skills</h2>
+<div class="skills-container">
+<div class="skill">HTML</div>
+<div class="skill">CSS</div>
+<div class="skill">JavaScript</div>
+<div class="skill">Bootstrap</div>
+<div class="skill">GitHub</div>
+</div>
+</section>
+
+<section id="projects">
+<h2>Projects</h2>
+<div class="projects-container">
+<div class="project">
+<h3>Portfolio Website</h3>
+<p>Personal responsive website.</p>
+<a href="#">View Project</a>
+</div>
+<div class="project">
+<h3>Landing Page</h3>
+<p>Modern UI landing page.</p>
+<a href="#">View Project</a>
+</div>
+</div>
+</section>
+
+<section id="contact">
+<h2>Contact Me</h2>
+<form onsubmit="sendMsg(event)">
+<input type="text" placeholder="Your Name" required>
+<input type="email" placeholder="Your Email" required>
+<textarea rows="5" placeholder="Your Message"></textarea>
+<button type="submit">Send</button>
+</form>
+</section>
+
+<button id="topBtn" onclick="goTop()">↑</button>
+
+<script>
+function toggleMode(){
+  document.body.classList.toggle("dark");
+}
+
+const sections=document.querySelectorAll("section");
+const topBtn=document.getElementById("topBtn");
+
+window.addEventListener("scroll",()=>{
+  sections.forEach(sec=>{
+    if(window.scrollY>sec.offsetTop-500){
+      sec.classList.add("show");
+    }
+  });
+  topBtn.style.display=window.scrollY>300?"block":"none";
+  setActiveLink();
+});
+
+function sendMsg(e){
+  e.preventDefault();
+  alert("Message sent successfully!");
+}
+
+function goTop(){
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+const links=document.querySelectorAll(".nav-link");
+function setActiveLink(){
+  let current="";
+  sections.forEach(sec=>{
+    if(window.scrollY>=sec.offsetTop-150){
+      current=sec.id;
+    }
+  });
+  links.forEach(link=>{
+    link.classList.remove("active");
+    if(link.getAttribute("href")==="#"+current){
+      link.classList.add("active");
+    }
+  });
+}
+</script>
+
+</body>
+</html>
